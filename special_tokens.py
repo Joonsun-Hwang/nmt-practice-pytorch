@@ -1,0 +1,13 @@
+PAD_ID = 0
+BOS_ID = 1
+EOS_ID = 2
+UNK_ID = 3
+CLS_ID = 4
+SEP_ID = 5
+
+PAD_PIECE = '<PAD>'
+BOS_PIECE = '<BOS>'
+EOS_PIECE = '<EOS>'
+UNK_PIECE = '<UNK>'
+CLS_PIECE = '<CLS>'
+SEP_PIECE = '<SEP>'

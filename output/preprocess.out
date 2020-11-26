@@ -1,0 +1,119 @@
+nohup: ignoring input
+/home/joonsun/nmt-practice-pytorch/raw_data
+[*] Downloading from http://data.statmt.org/wmt18/translation-task/training-parallel-nc-v13.tgz to training-parallel-nc-v13.tgz.
+training-parallel-nc-v13.tgz: 0.00B [00:00, ?B/s]training-parallel-nc-v13.tgz:   0%|          | 8.19k/113M [00:00<2:23:04, 13.2kB/s]training-parallel-nc-v13.tgz:   0%|          | 16.4k/113M [00:00<1:59:20, 15.8kB/s]training-parallel-nc-v13.tgz:   0%|          | 49.2k/113M [00:01<1:28:19, 21.3kB/s]training-parallel-nc-v13.tgz:   0%|          | 106k/113M [00:01<1:04:32, 29.2kB/s] training-parallel-nc-v13.tgz:   0%|          | 221k/113M [00:01<46:30, 40.5kB/s]  training-parallel-nc-v13.tgz:   0%|          | 451k/113M [00:02<33:10, 56.6kB/s]training-parallel-nc-v13.tgz:   1%|          | 918k/113M [00:02<23:27, 79.7kB/s]training-parallel-nc-v13.tgz:   2%|▏         | 1.84M/113M [00:02<16:27, 113kB/s]training-parallel-nc-v13.tgz:   3%|▎         | 3.69M/113M [00:02<11:24, 160kB/s]training-parallel-nc-v13.tgz:   6%|▌         | 6.84M/113M [00:03<07:48, 227kB/s]training-parallel-nc-v13.tgz:   9%|▉         | 9.98M/113M [00:03<05:20, 322kB/s]training-parallel-nc-v13.tgz:  11%|█▏        | 12.9M/113M [00:03<03:41, 453kB/s]training-parallel-nc-v13.tgz:  14%|█▍        | 15.8M/113M [00:03<02:33, 636kB/s]training-parallel-nc-v13.tgz:  17%|█▋        | 18.8M/113M [00:04<01:46, 885kB/s]training-parallel-nc-v13.tgz:  19%|█▉        | 21.7M/113M [00:04<01:15, 1.22MB/s]training-parallel-nc-v13.tgz:  22%|██▏       | 24.6M/113M [00:04<00:53, 1.66MB/s]training-parallel-nc-v13.tgz:  24%|██▍       | 27.4M/113M [00:05<00:38, 2.21MB/s]training-parallel-nc-v13.tgz:  27%|██▋       | 30.4M/113M [00:05<00:28, 2.90MB/s]training-parallel-nc-v13.tgz:  29%|██▉       | 33.4M/113M [00:05<00:21, 3.70MB/s]training-parallel-nc-v13.tgz:  32%|███▏      | 36.2M/113M [00:05<00:16, 4.58MB/s]training-parallel-nc-v13.tgz:  35%|███▍      | 39.1M/113M [00:06<00:13, 5.49MB/s]training-parallel-nc-v13.tgz:  37%|███▋      | 41.6M/113M [00:06<00:11, 6.01MB/s]training-parallel-nc-v13.tgz:  39%|███▉      | 44.7M/113M [00:06<00:09, 6.98MB/s]training-parallel-nc-v13.tgz:  41%|████▏     | 46.9M/113M [00:07<00:09, 7.21MB/s]training-parallel-nc-v13.tgz:  44%|████▍     | 50.0M/113M [00:07<00:07, 8.08MB/s]training-parallel-nc-v13.tgz:  47%|████▋     | 53.1M/113M [00:07<00:06, 8.83MB/s]training-parallel-nc-v13.tgz:  50%|████▉     | 56.2M/113M [00:07<00:06, 9.24MB/s]training-parallel-nc-v13.tgz:  52%|█████▏    | 59.1M/113M [00:08<00:05, 9.51MB/s]training-parallel-nc-v13.tgz:  55%|█████▍    | 62.1M/113M [00:08<00:05, 9.82MB/s]training-parallel-nc-v13.tgz:  58%|█████▊    | 65.1M/113M [00:08<00:04, 10.0MB/s]training-parallel-nc-v13.tgz:  60%|██████    | 67.9M/113M [00:09<00:04, 10.1MB/s]training-parallel-nc-v13.tgz:  63%|██████▎   | 70.8M/113M [00:09<00:04, 10.1MB/s]training-parallel-nc-v13.tgz:  65%|██████▌   | 73.7M/113M [00:09<00:03, 10.1MB/s]training-parallel-nc-v13.tgz:  68%|██████▊   | 76.6M/113M [00:09<00:03, 10.2MB/s]training-parallel-nc-v13.tgz:  70%|███████   | 79.6M/113M [00:10<00:03, 10.2MB/s]training-parallel-nc-v13.tgz:  73%|███████▎  | 82.5M/113M [00:10<00:02, 10.2MB/s]training-parallel-nc-v13.tgz:  75%|███████▌  | 85.4M/113M [00:10<00:02, 10.3MB/s]training-parallel-nc-v13.tgz:  78%|███████▊  | 88.3M/113M [00:11<00:02, 10.3MB/s]training-parallel-nc-v13.tgz:  81%|████████  | 91.2M/113M [00:11<00:02, 10.2MB/s]training-parallel-nc-v13.tgz:  83%|████████▎ | 94.1M/113M [00:11<00:01, 10.2MB/s]training-parallel-nc-v13.tgz:  86%|████████▌ | 97.0M/113M [00:11<00:01, 10.3MB/s]training-parallel-nc-v13.tgz:  88%|████████▊ | 99.9M/113M [00:12<00:01, 10.3MB/s]training-parallel-nc-v13.tgz:  91%|█████████ | 103M/113M [00:12<00:01, 10.3MB/s] training-parallel-nc-v13.tgz:  93%|█████████▎| 106M/113M [00:12<00:00, 10.3MB/s]training-parallel-nc-v13.tgz:  96%|█████████▌| 109M/113M [00:13<00:00, 10.3MB/s]training-parallel-nc-v13.tgz:  99%|█████████▊| 112M/113M [00:13<00:00, 10.3MB/s]training-parallel-nc-v13.tgz: 113MB [00:13, 8.47MB/s]                           
+[*] Extracting training-parallel-nc-v13.tgz.
+/home/joonsun/nmt-practice-pytorch/raw_data
+[*] Downloading from http://data.statmt.org/wmt18/translation-task/dev.tgz to dev.tgz.
+dev.tgz: 0.00B [00:00, ?B/s]dev.tgz:   0%|          | 8.19k/32.4M [00:00<37:22, 14.5kB/s]dev.tgz:   0%|          | 16.4k/32.4M [00:00<31:43, 17.0kB/s]dev.tgz:   0%|          | 49.2k/32.4M [00:01<23:34, 22.9kB/s]dev.tgz:   0%|          | 106k/32.4M [00:01<17:16, 31.2kB/s] dev.tgz:   1%|          | 221k/32.4M [00:01<12:26, 43.1kB/s]dev.tgz:   1%|▏         | 451k/32.4M [00:01<08:50, 60.2kB/s]dev.tgz:   3%|▎         | 918k/32.4M [00:02<06:11, 84.7kB/s]dev.tgz:   6%|▌         | 1.84M/32.4M [00:02<04:15, 120kB/s]dev.tgz:  11%|█▏        | 3.69M/32.4M [00:02<02:48, 170kB/s]dev.tgz:  11%|█▏        | 3.69M/32.4M [00:02<04:46, 100kB/s]dev.tgz:  21%|██        | 6.82M/32.4M [00:02<02:59, 143kB/s]dev.tgz:  21%|██        | 6.84M/32.4M [00:03<02:55, 145kB/s]dev.tgz:  31%|███       | 9.95M/32.4M [00:03<01:48, 207kB/s]dev.tgz:  31%|███       | 9.97M/32.4M [00:03<02:00, 187kB/s]dev.tgz:  40%|████      | 13.1M/32.4M [00:03<01:12, 266kB/s]dev.tgz:  40%|████      | 13.1M/32.4M [00:03<01:19, 244kB/s]dev.tgz:  50%|█████     | 16.2M/32.4M [00:03<00:46, 347kB/s]dev.tgz:  50%|█████     | 16.3M/32.4M [00:03<00:51, 312kB/s]dev.tgz:  60%|█████▉    | 19.3M/32.4M [00:04<00:29, 444kB/s]dev.tgz:  60%|█████▉    | 19.4M/32.4M [00:04<00:45, 289kB/s]dev.tgz:  69%|██████▉   | 22.4M/32.4M [00:04<00:24, 408kB/s]dev.tgz:  78%|███████▊  | 25.4M/32.4M [00:04<00:12, 573kB/s]dev.tgz:  88%|████████▊ | 28.4M/32.4M [00:05<00:04, 800kB/s]dev.tgz:  97%|█████████▋| 31.5M/32.4M [00:05<00:00, 1.11MB/s]dev.tgz: 32.4MB [00:05, 5.95MB/s]                            
+[*] Extracting dev.tgz.
+/home/joonsun/nmt-practice-pytorch/raw_data
+[*] Downloading from https://storage.googleapis.com/tf-perf-public/official_transformer/test_data/newstest2014.tgz to newstest2014.tgz.
+newstest2014.tgz: 0.00B [00:00, ?B/s]newstest2014.tgz:   3%|▎         | 8.19k/298k [00:00<00:07, 38.7kB/s]newstest2014.tgz:  36%|███▌      | 106k/298k [00:00<00:03, 54.3kB/s] newstest2014.tgz: 303kB [00:00, 822kB/s]                            
+[*] Extracting newstest2014.tgz.
+[*] Merge files into two files: /home/joonsun/nmt-practice-pytorch/raw_data/raw-de-en-train.src and /home/joonsun/nmt-practice-pytorch/raw_data/raw-de-en-train.trg.
+  Input files: 
+    - SRC: /home/joonsun/nmt-practice-pytorch/raw_data/training-parallel-nc-v13/news-commentary-v13.de-en.de
+    - TRG: /home/joonsun/nmt-practice-pytorch/raw_data/training-parallel-nc-v13/news-commentary-v13.de-en.en
+[*] Merge files into two files: /home/joonsun/nmt-practice-pytorch/raw_data/raw-de-en-val.src and /home/joonsun/nmt-practice-pytorch/raw_data/raw-de-en-val.trg.
+  Input files: 
+    - SRC: /home/joonsun/nmt-practice-pytorch/raw_data/dev/newstest2013.de
+    - TRG: /home/joonsun/nmt-practice-pytorch/raw_data/dev/newstest2013.en
+[*] Merge files into two files: /home/joonsun/nmt-practice-pytorch/raw_data/raw-de-en-test.src and /home/joonsun/nmt-practice-pytorch/raw_data/raw-de-en-test.trg.
+  Input files: 
+    - SRC: /home/joonsun/nmt-practice-pytorch/raw_data/newstest2014.de
+    - TRG: /home/joonsun/nmt-practice-pytorch/raw_data/newstest2014.en
+[*] Training Sentence Piece model: sp-de-en...
+sentencepiece_trainer.cc(179) LOG(INFO) Running command: --input=/home/joonsun/nmt-practice-pytorch/raw_data/raw-de-en-train.trg,/home/joonsun/nmt-practice-pytorch/raw_data/raw-de-en-train.src --model_prefix=sp-de-en --vocab_size=32000 --bos_id=-1 --eos_id=-1 --character_coverage=1.0 --model_type=unigram --normalization_rule_name=nfkc_cf
+sentencepiece_trainer.cc(79) LOG(INFO) Starts training with : 
+trainer_spec {
+  input: /home/joonsun/nmt-practice-pytorch/raw_data/raw-de-en-train.trg
+  input: /home/joonsun/nmt-practice-pytorch/raw_data/raw-de-en-train.src
+  input_format: 
+  model_prefix: sp-de-en
+  model_type: UNIGRAM
+  vocab_size: 32000
+  self_test_sample_size: 0
+  character_coverage: 1
+  input_sentence_size: 0
+  shuffle_input_sentence: 1
+  seed_sentencepiece_size: 1000000
+  shrinking_factor: 0.75
+  max_sentence_length: 4192
+  num_threads: 16
+  num_sub_iterations: 2
+  max_sentencepiece_length: 16
+  split_by_unicode_script: 1
+  split_by_number: 1
+  split_by_whitespace: 1
+  split_digits: 0
+  treat_whitespace_as_suffix: 0
+  required_chars: 
+  byte_fallback: 0
+  vocabulary_output_piece_score: 1
+  train_extremely_large_corpus: 0
+  hard_vocab_limit: 1
+  use_all_vocab: 0
+  unk_id: 0
+  bos_id: -1
+  eos_id: -1
+  pad_id: -1
+  unk_piece: <unk>
+  bos_piece: <s>
+  eos_piece: </s>
+  pad_piece: <pad>
+  unk_surface:  ⁇ 
+}
+normalizer_spec {
+  name: nfkc_cf
+  add_dummy_prefix: 1
+  remove_extra_whitespaces: 1
+  escape_whitespaces: 1
+  normalization_rule_tsv: 
+}
+denormalizer_spec {}
+trainer_interface.cc(320) LOG(INFO) SentenceIterator is not specified. Using MultiFileSentenceIterator.
+trainer_interface.cc(175) LOG(INFO) Loading corpus: /home/joonsun/nmt-practice-pytorch/raw_data/raw-de-en-train.trg
+trainer_interface.cc(175) LOG(INFO) Loading corpus: /home/joonsun/nmt-practice-pytorch/raw_data/raw-de-en-train.src
+trainer_interface.cc(376) LOG(INFO) Loaded all 568492 sentences
+trainer_interface.cc(391) LOG(INFO) Adding meta_piece: <unk>
+trainer_interface.cc(396) LOG(INFO) Normalizing sentences...
+trainer_interface.cc(457) LOG(INFO) all chars count=86566669
+trainer_interface.cc(468) LOG(INFO) Done: 100% characters are covered.
+trainer_interface.cc(478) LOG(INFO) Alphabet size=235
+trainer_interface.cc(479) LOG(INFO) Final character coverage=1
+trainer_interface.cc(511) LOG(INFO) Done! preprocessed 568492 sentences.
+unigram_model_trainer.cc(138) LOG(INFO) Making suffix array...
+unigram_model_trainer.cc(142) LOG(INFO) Extracting frequent sub strings...
+unigram_model_trainer.cc(193) LOG(INFO) Initialized 717422 seed sentencepieces
+trainer_interface.cc(517) LOG(INFO) Tokenizing input sentences with whitespace: 568492
+trainer_interface.cc(527) LOG(INFO) Done! 426495
+unigram_model_trainer.cc(488) LOG(INFO) Using 426495 sentences for EM training
+unigram_model_trainer.cc(504) LOG(INFO) EM sub_iter=0 size=177207 obj=11.955 num_tokens=915448 num_tokens/piece=5.16598
+unigram_model_trainer.cc(504) LOG(INFO) EM sub_iter=1 size=143271 obj=9.24564 num_tokens=915774 num_tokens/piece=6.3919
+unigram_model_trainer.cc(504) LOG(INFO) EM sub_iter=0 size=107415 obj=9.22402 num_tokens=956782 num_tokens/piece=8.90734
+unigram_model_trainer.cc(504) LOG(INFO) EM sub_iter=1 size=107344 obj=9.21431 num_tokens=957943 num_tokens/piece=8.92405
+unigram_model_trainer.cc(504) LOG(INFO) EM sub_iter=0 size=80503 obj=9.26719 num_tokens=1022269 num_tokens/piece=12.6985
+unigram_model_trainer.cc(504) LOG(INFO) EM sub_iter=1 size=80499 obj=9.25653 num_tokens=1022332 num_tokens/piece=12.6999
+unigram_model_trainer.cc(504) LOG(INFO) EM sub_iter=0 size=60371 obj=9.33865 num_tokens=1096990 num_tokens/piece=18.1708
+unigram_model_trainer.cc(504) LOG(INFO) EM sub_iter=1 size=60369 obj=9.32392 num_tokens=1096865 num_tokens/piece=18.1693
+unigram_model_trainer.cc(504) LOG(INFO) EM sub_iter=0 size=45276 obj=9.43948 num_tokens=1177826 num_tokens/piece=26.0144
+unigram_model_trainer.cc(504) LOG(INFO) EM sub_iter=1 size=45276 obj=9.41924 num_tokens=1177824 num_tokens/piece=26.0143
+unigram_model_trainer.cc(504) LOG(INFO) EM sub_iter=0 size=35200 obj=9.5501 num_tokens=1252968 num_tokens/piece=35.5957
+unigram_model_trainer.cc(504) LOG(INFO) EM sub_iter=1 size=35199 obj=9.52727 num_tokens=1252986 num_tokens/piece=35.5972
+trainer_interface.cc(605) LOG(INFO) Saving model: sp-de-en.model
+trainer_interface.cc(616) LOG(INFO) Saving vocabs: sp-de-en.vocab
+[*] Preparing vocabulary...
+	[-] The vocabularies are shared.
+/home/joonsun/miniconda3/envs/nmt/lib/python3.8/site-packages/torchtext/data/field.py:150: UserWarning: Field class will be retired soon and moved to torchtext.legacy. Please see the most recent release notes for further information.
+  warnings.warn('{} class will be retired soon and moved to torchtext.legacy. Please see the most recent release notes for further information.'.format(self.__class__.__name__), UserWarning)
+[*] Preparing dataset...
+/home/joonsun/miniconda3/envs/nmt/lib/python3.8/site-packages/torchtext/data/example.py:78: UserWarning: Example class will be retired soon and moved to torchtext.legacy. Please see the most recent release notes for further information.
+  warnings.warn('Example class will be retired soon and moved to torchtext.legacy. Please see the most recent release notes for further information.', UserWarning)
+[*] Building the vocabularies...
+[*] Dumping the processed data to data directory /home/joonsun/nmt-practice-pytorch/data
+
+
+[*] RESULTS:
+	 283733 training data 2992 validation data and 3001 test data were preprocessed.
+	 31999 source vocabulary and 31999 target vocabulary were saved.
