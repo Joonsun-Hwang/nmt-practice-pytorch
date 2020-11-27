@@ -4,9 +4,12 @@ import sys
 import argparse
 import tarfile
 from glob import glob
+import warnings
+import random
 
 import dill as pickle
 from tqdm import tqdm
+import numpy as np
 import torch
 from torchtext import data, datasets
 from torchtext.datasets import TranslationDataset
@@ -14,6 +17,8 @@ import sentencepiece as spm
 
 from utils import file_exist, mkdir_if_needed, rmdir_if_existed, rmfile_if_existed
 import special_tokens
+
+warnings.filterwarnings(action="ignore")
 
 HERE = os.path.dirname(os.path.realpath(__file__))
 
@@ -171,18 +176,27 @@ def build_vocabulary(args):
     else:
         fields[0].build_vocab(train, min_freq=args.min_freq)
     
-    train_val_data = {
+    train_data = {
         'settings': args,
         'vocab': {'src': fields[0], 'trg': fields[1]},
-        'train': train.examples,
-        'val': val.examples}
+        'examples': train.examples}
+    val_data = {
+        'settings': args,
+        'vocab': {'src': fields[0], 'trg': fields[1]},
+        'examples': val.examples}
     test_data = {
         'settings': args,
         'vocab': {'src': fields[0], 'trg': fields[1]},
-        'test': test.examples}
+        'examples': test.examples}
         
     print('[*] Dumping the processed data to data directory', args.data_dir)
-    pickle.dump(train_val_data, open(os.path.join(args.data_dir, 'train_val.pkl'), 'wb'))
+    print('\tSaving training dataset...')
+    pickle.dump(train_data, open(os.path.join(args.data_dir, 'train.pkl'), 'wb'))
+
+    print('\tSaving validation dataset...')
+    pickle.dump(val_data, open(os.path.join(args.data_dir, 'val.pkl'), 'wb'))
+
+    print('\tSaving test dataset...')
     pickle.dump(test_data, open(os.path.join(args.data_dir, 'test.pkl'), 'wb'))
     
     print('\n\n[*] RESULTS:')
@@ -194,6 +208,16 @@ if __name__ == "__main__":
     simple run:
     python preprocess.py
     """
+    
+    # For Reproducibility
+    random_seed = 0
+    torch.manual_seed(random_seed)
+    torch.cuda.manual_seed(random_seed)
+    torch.cuda.manual_seed_all(random_seed) # if use multi-GPU
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    np.random.seed(random_seed)
+    random.seed(random_seed)
 
     parser = argparse.ArgumentParser()
     
