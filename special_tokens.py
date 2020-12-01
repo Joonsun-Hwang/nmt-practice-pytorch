@@ -1,9 +1,9 @@
-PAD_ID = 0
-BOS_ID = 1
-EOS_ID = 2
-UNK_ID = 3
-CLS_ID = 4
-SEP_ID = 5
+PAD_IDX = 0
+BOS_IDX = 1
+EOS_IDX = 2
+UNK_IDX = 3
+CLS_IDX = 4
+SEP_IDX = 5
 
 PAD_PIECE = '<PAD>'
 BOS_PIECE = '<BOS>'

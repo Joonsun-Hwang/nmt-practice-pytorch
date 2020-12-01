@@ -37,15 +37,18 @@ class WMTDatasets():
         
         return data_iterator
 
-    def get_src_pad_id(self):
+    def get_src_pad_idx(self):
         return self.src.vocab.stoi[special_tokens.PAD_PIECE]
         
-    def get_trg_pad_id(self):
+    def get_trg_pad_idx(self):
         return self.trg.vocab.stoi[special_tokens.PAD_PIECE]
 
     def get_src_vocab_size(self):
         return len(self.src.vocab)
 
-    def get_trg_vocab_size():
+    def get_trg_vocab_size(self):
         return len(self.trg.vocab)
+    
+    def get_max_len(self):
+        return self.max_len
 
