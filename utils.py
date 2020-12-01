@@ -2,6 +2,9 @@ import os
 import shutil
 from glob import glob
 
+import torch
+import torch.nn.functional as F
+
 def file_exist(dir_name, file_name):
     for sub_dir, _, files in os.walk(dir_name):
         if file_name in files:
@@ -56,7 +59,25 @@ def cal_loss(pred, gold, trg_pad_idx, smoothing=True):
     return loss
 
 def print_performances(header, loss, acc, start_time):
-    print('  - {header:12} ppl: {ppl: 8.5f}, accuracy: {acc:3.3f} %, '\
+    print(' - {header:12} ppl: {ppl: 8.5f}, accuracy: {acc:3.3f} %, '\
           'elapse: {elapse:3.3f} min'.format(
               header=f"({header})", ppl=math.exp(min(loss, 100)),
               acc=100*acc, elapse=(time.time()-start_time)/60))
+
+def save_checkpoint(args, model_state_dict, optimizer_state_dict):
+    here = os.path.dirname(os.path.realpath(__file__))
+    checkpoint = {
+        'args': args, 
+        'model_state_dict': model_state_dict, 
+        'optimizer_state_dict': optimizer_state_dict}
+    
+    ckpt_dir = 'checkpoints'
+    mkdir_if_needed(ckpt_dir)
+    
+    file_name = args.checkpoint + '.ckpt'
+    torch.save(checkpoint, os.path.join(here, ckpt_dir, file_name))
+    
+    if args.val_losses[-1] <= min(args.val_losses):
+        file_name = 'BEST_' + file_name
+        torch.save(checkpoint, os.path.join(model_path, file_name))
+        print('\t[!] The best checkpoint is updated.')

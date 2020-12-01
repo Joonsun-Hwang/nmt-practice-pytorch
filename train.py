@@ -29,7 +29,7 @@ def train_epoch(args, iterator, model, optimizer):
     model.train()
     epoch_loss, n_word_total, n_word_correct = 0, 0, 0
 
-    for batch in tqdm(iterator, desc='\t- Training -', leave=False, mininterval=1):
+    for batch in tqdm(iterator, desc='  - (Training)   ', leave=False, mininterval=1):
 
         # Prepare data
         src = patch_src(batch.src[0], args.src_pad_idx).to(args.device)
@@ -65,7 +65,7 @@ def val_epoch(args, iterator, model):
     epoch_loss, n_word_total, n_word_correct = 0, 0, 0
 
     with torch.no_grad():
-        for batch in tqdm(iterator):
+        for batch in tqdm(iterator, desc='  - (Validation) ', leave=False, mininterval=1):
 
             # Prepare data
             src = patch_src(batch.src[0], args.src_pad_idx).to(args.device)
@@ -120,8 +120,8 @@ def train(args):
         lr=args.learning_rate)
 
     # Train the model
-    val_losses = []
-    val_acces = []
+    args.val_losses = []
+    args.val_acces = []
     start_epoch = 0
     
     print("[*] Start training the model.")
@@ -145,16 +145,16 @@ def train(args):
             model=model)
         print_performances('Validation', val_loss, val_acc, start_time)
         
-        val_losses += [val_loss]
-        val_acces += [val_acc]
+        args.val_losses += [val_loss]
+        args.val_acces += [val_acc]
         
         args.start_epoch = epoch+1
-        save_checkpoint(args, model.state_dict())
+        save_checkpoint(args, model.state_dict(), optimizer.state_dict())
     
     print('\n[*] End training the model.')
     print(' - minimum validation ppl: {ppl: 3.3f}, '  \
           'maximum validation accuracy: {acc: 3.3f}'.format(
-              ppl=math.exp(min(loss, 100)), acc=100*max(val_acces)))
+              ppl=math.exp(min(args.val_losses, 100)), acc=100*max(args.val_acces)))
     
 
 if __name__ == "__main__":
