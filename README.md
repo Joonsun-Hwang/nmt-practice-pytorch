@@ -2,8 +2,7 @@
 >This repository is a repository for practicing parallel training of models applying various techniques based on the Transformer model using the WMT dataset.  
 
 # 1. Environment   
-Nvidia driver version is 440.64.00 and all experiments were conducted on one Geforce GTX 1080 ti.  
-
+- Nvidia Driver == 455.32.00  
 - CUDA == 11.0  
 - numpy == 1.19.2  
 - torch == 1.7.0  
