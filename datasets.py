@@ -2,12 +2,13 @@ import os
 import pickle
 
 import torch
+from torch.utils.data import Dataset
 from torchtext import data, datasets
 
 import special_tokens
 
 
-class WMTDatasets():
+class WMTDatasets(Dataset):
     def __init__(self, args, split):
         super(WMTDatasets, self).__init__()
 
@@ -24,7 +25,10 @@ class WMTDatasets():
         self.src = self.data['vocab']['src']
         self.trg = self.data['vocab']['trg']
         self.fields = {'src': self.src, 'trg': self.trg}
-
+        
+        self.examples = list(self.data['examples'])
+        
+    """
     def get_data_iterator(self):
         dataset = data.Dataset(examples=self.data['examples'], fields=self.fields)
         if self.split in ['train', 'val']:
@@ -36,6 +40,34 @@ class WMTDatasets():
                 batch_size=1, device=self.args.device, shuffle=False, train=train)
         
         return data_iterator
+   """
+   
+    def __getitem__(self, idx):
+        if torch.is_tensor(idx):
+            idx = idx.tolist()
+        
+        src_plain = self.examples[idx].__dict__['src']
+        trg_plain = self.examples[idx].__dict__['trg']
+        src_len = len(src_plain)
+        trg_len = len(trg_plain)
+        
+        src_tensor = [self.src.vocab.stoi[special_tokens.BOS_PIECE]]
+        for word in src_plain:
+            src_tensor.append(self.src.vocab.stoi[word])
+        src_tensor.append(self.src.vocab.stoi[special_tokens.EOS_PIECE])
+        src_tensor = src_tensor + [self.src.vocab.stoi[special_tokens.PAD_PIECE]] * (self.max_len - src_len)
+        
+        trg_tensor = [self.trg.vocab.stoi[special_tokens.BOS_PIECE]]
+        for word in trg_plain:
+            trg_tensor.append(self.trg.vocab.stoi[word])
+        trg_tensor.append(self.trg.vocab.stoi[special_tokens.EOS_PIECE])
+        trg_tensor = trg_tensor + [self.trg.vocab.stoi[special_tokens.PAD_PIECE]] * (self.max_len - trg_len)
+        
+        return torch.LongTensor(src_tensor), torch.LongTensor(trg_tensor), \
+            torch.LongTensor([src_len]), torch.LongTensor([trg_len])
+    
+    def __len__(self):
+        return len(self.examples)
 
     def get_src_pad_idx(self):
         return self.src.vocab.stoi[special_tokens.PAD_PIECE]
@@ -51,4 +83,3 @@ class WMTDatasets():
     
     def get_max_len(self):
         return self.max_len
-
