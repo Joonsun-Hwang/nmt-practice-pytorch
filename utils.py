@@ -1,5 +1,7 @@
 import os
 import shutil
+import math
+import time
 from glob import glob
 
 import torch
@@ -89,5 +91,13 @@ def save_checkpoint(args, model_state_dict, optimizer_state_dict):
     
     if args.val_losses[-1] <= min(args.val_losses):
         file_name = 'BEST_' + file_name
-        torch.save(checkpoint, os.path.join(model_path, file_name))
+        torch.save(checkpoint, os.path.join(here, ckpt_dir, file_name))
         print('\t[!] The best checkpoint is updated.')
+
+    """
+    dist.barrier()
+    # configure map_location properly
+    map_location = {'cuda:%d' % 0: 'cuda:%d' % rank}
+    ddp_model.load_state_dict(
+        torch.load(CHECKPOINT_PATH, map_location=map_location))
+    """

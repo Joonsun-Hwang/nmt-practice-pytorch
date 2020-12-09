@@ -17,7 +17,7 @@ import torch_optimizer as optim
 
 from datasets import WMTDatasets
 from models.models import Transformer
-from utils import cal_performance, setup, cleanup
+from utils import setup, cleanup, cal_performance, print_performances, save_checkpoint
 
 warnings.filterwarnings(action="ignore")
 
@@ -164,21 +164,24 @@ def train(rank, args):
             iterator=train_data_loader,
             model=model,
             optimizer=optimizer)
-        print_performances('Training', train_loss, train_acc, start_time)
+        if args.rank == 0:
+            print_performances('Training', train_loss, train_acc, start_time)
         
         # validation phase
         start_time = time.time()
-        val_loss, val_acc = evaluate_epoch(
+        val_loss, val_acc = val_epoch(
             args=args,
             iterator=val_data_loader,
             model=model)
-        print_performances('Validation', val_loss, val_acc, start_time)
-        
-        args.val_losses += [val_loss]
-        args.val_acces += [val_acc]
+        if args.rank == 0:
+            print_performances('Validation', val_loss, val_acc, start_time)
         
         args.start_epoch = epoch+1
-        if rank == args.start_rank_idx:
+        
+        if args.rank == 0:
+            args.val_losses += [val_loss]
+            args.val_acces += [val_acc]
+            
             save_checkpoint(args, model.state_dict(), optimizer.state_dict())
         
     if rank == 0:
@@ -192,7 +195,7 @@ def train(rank, args):
 
 if __name__ == "__main__":
     '''
-    CUDA_VISIBLE_DEVICES=1,2,3 python train.py transformer --emb_share_weight --prj_share_weight --batch_size 1000
+    CUDA_VISIBLE_DEVICES=1,2,3 python train.py transformer --emb_share_weight --prj_share_weight --batch_size 150
     '''
     # Operating System Setup
     try:
