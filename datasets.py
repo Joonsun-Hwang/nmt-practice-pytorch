@@ -12,7 +12,8 @@ class WMTDatasets(Dataset):
     def __init__(self, args, split):
         super(WMTDatasets, self).__init__()
 
-        assert split in ['train', 'val', 'test'], "[!] The argument of 'split' should be 'train', 'val',  or 'test'."
+        assert split in ['train', 'val', 'test'], \
+            "[!] The argument of 'split' should be 'train', 'val',  or 'test'."
         self.split = split
         self.args = args
 
@@ -55,13 +56,15 @@ class WMTDatasets(Dataset):
         for word in src_plain:
             src_tensor.append(self.src.vocab.stoi[word])
         src_tensor.append(self.src.vocab.stoi[special_tokens.EOS_PIECE])
-        src_tensor = src_tensor + [self.src.vocab.stoi[special_tokens.PAD_PIECE]] * (self.max_len - src_len)
+        src_tensor = src_tensor + [self.src.vocab.stoi[special_tokens.PAD_PIECE]] * \
+            (self.max_len - src_len)
         
         trg_tensor = [self.trg.vocab.stoi[special_tokens.BOS_PIECE]]
         for word in trg_plain:
             trg_tensor.append(self.trg.vocab.stoi[word])
         trg_tensor.append(self.trg.vocab.stoi[special_tokens.EOS_PIECE])
-        trg_tensor = trg_tensor + [self.trg.vocab.stoi[special_tokens.PAD_PIECE]] * (self.max_len - trg_len)
+        trg_tensor = trg_tensor + [self.trg.vocab.stoi[special_tokens.PAD_PIECE]] * \
+            (self.max_len - trg_len)
         
         return torch.LongTensor(src_tensor), torch.LongTensor(trg_tensor), \
             torch.LongTensor([src_len]), torch.LongTensor([trg_len])

@@ -5,9 +5,9 @@ UNK_IDX = 3
 CLS_IDX = 4
 SEP_IDX = 5
 
-PAD_PIECE = '<PAD>'
-BOS_PIECE = '<BOS>'
-EOS_PIECE = '<EOS>'
-UNK_PIECE = '<UNK>'
-CLS_PIECE = '<CLS>'
-SEP_PIECE = '<SEP>'
+PAD_PIECE = '<pad>'
+BOS_PIECE = '<bos>'
+EOS_PIECE = '<eos>'
+UNK_PIECE = '<unk>'
+CLS_PIECE = '<cls>'
+SEP_PIECE = '<sep>'

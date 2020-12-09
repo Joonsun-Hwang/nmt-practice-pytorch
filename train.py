@@ -7,12 +7,17 @@ import time
 from tqdm import tqdm
 import numpy as np
 import torch
+import torch.distributed as dist
+import torch.multiprocessing as mp
 from torch.utils.data import DataLoader
+from torch.nn.parallel import DistributedDataParallel as DDP
+from torch.utils.data.distributed import DistributedSampler as DS
+from torch.cuda.amp import autocast, GradScaler
 import torch_optimizer as optim
 
 from datasets import WMTDatasets
 from models.models import Transformer
-from utils import cal_performance
+from utils import cal_performance, setup, cleanup
 
 warnings.filterwarnings(action="ignore")
 
@@ -41,8 +46,8 @@ def train_epoch(args, iterator, model, optimizer):
         src_len = batch[2]
         trg_len = batch[3]
 
-        src = patch_src(args, src_tensor, torch.max(src_len)).to(args.device)
-        trg, gold = map(lambda x: x.to(args.device), 
+        src = patch_src(args, src_tensor, torch.max(src_len)).to(args.rank)
+        trg, gold = map(lambda x: x.to(args.rank), 
             patch_trg(args, trg_tensor, torch.max(trg_len)))
         
         # Forward
@@ -82,8 +87,8 @@ def val_epoch(args, iterator, model):
             src_len = batch[2]
             trg_len = batch[3]
 
-            src = patch_src(args, src_tensor, torch.max(src_len)).to(args.device)
-            trg, gold = map(lambda x: x.to(args.device), 
+            src = patch_src(args, src_tensor, torch.max(src_len)).to(args.rank)
+            trg, gold = map(lambda x: x.to(args.rank), 
                 patch_trg(args, trg_tensor, torch.max(trg_len)))
             
             # Forward
@@ -101,19 +106,21 @@ def val_epoch(args, iterator, model):
     
     return avg_loss, acc
 
-def train(args):
+def train(rank, args):
+    args.rank = rank
+    
+    torch.cuda.set_device(args.rank)
+    setup(args.rank, args.world_size)
     
     # Prepare dataset
     train_dataset = WMTDatasets(args, split='train')
     val_dataset = WMTDatasets(args, split='val')
     
-    train_data_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
-    val_data_loader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)
+    train_sampler = DS(train_dataset, num_replicas=args.world_size, rank=args.rank)
+    val_sampler = DS(val_dataset, num_replicas=args.world_size, rank=args.rank)
     
-    """
-    train_iterator = train_dataset.get_data_iterator()
-    val_tierator = val_dataset.get_data_iterator()
-    """
+    train_data_loader = DataLoader(train_dataset, batch_size=args.batch_size, sampler=train_sampler)
+    val_data_loader = DataLoader(val_dataset, batch_size=args.batch_size, sampler=val_sampler)
     
     args.src_vocab_size = train_dataset.get_src_vocab_size()
     args.trg_vocab_size = train_dataset.get_trg_vocab_size()
@@ -133,19 +140,22 @@ def train(args):
         n_head=args.n_head,
         dropout=args.dropout,
         prj_share_weight=args.prj_share_weight,
-        emb_share_weight=args.emb_share_weight).to(args.device)
+        emb_share_weight=args.emb_share_weight).cuda(args.rank)
     optimizer = optim.RAdam(
         filter(lambda p: p.requires_grad, model.parameters()), 
         lr=args.learning_rate)
+        
+    model = DDP(model, device_ids=[args.rank])
 
     # Train the model
-    args.val_losses = []
-    args.val_acces = []
-    start_epoch = 0
+    args.start_epoch = 0
     
-    print("[*] Start training the model.")
-    for epoch in range(start_epoch, args.max_epoch):
-        print("\nepoch: [" + str(epoch) + "/" + str(args.max_epoch) + "]")
+    if args.rank == 0:
+        print(f"[*] Start training the model with multi-GPUs {args.gpu_idxs}.")
+    
+    for epoch in range(args.start_epoch, args.max_epoch):
+        if args.rank == 0:
+            print("\nepoch: [" + str(epoch) + "/" + str(args.max_epoch) + "]")
         
         # training phase
         start_time = time.time()
@@ -168,18 +178,23 @@ def train(args):
         args.val_acces += [val_acc]
         
         args.start_epoch = epoch+1
-        save_checkpoint(args, model.state_dict(), optimizer.state_dict())
+        if rank == args.start_rank_idx:
+            save_checkpoint(args, model.state_dict(), optimizer.state_dict())
+        
+    if rank == 0:
+        print('\n[*] End training the model.')
+        print(' - minimum validation ppl: {ppl: 3.3f}, '  \
+              'maximum validation accuracy: {acc: 3.3f}'.format(
+                  ppl=math.exp(min(args.val_losses, 100)), acc=100*max(args.val_acces)))
     
-    print('\n[*] End training the model.')
-    print(' - minimum validation ppl: {ppl: 3.3f}, '  \
-          'maximum validation accuracy: {acc: 3.3f}'.format(
-              ppl=math.exp(min(args.val_losses, 100)), acc=100*max(args.val_acces)))
+    cleanup()
     
 
 if __name__ == "__main__":
     '''
-    CUDA_VISIBLE_DEVICES=3 python train.py transformer --emb_share_weight --prj_share_weight --batch_size 1
+    CUDA_VISIBLE_DEVICES=1,2,3 python train.py transformer --emb_share_weight --prj_share_weight --batch_size 1000
     '''
+    # Operating System Setup
     try:
         gpu_idxs = list(map(int, os.environ["CUDA_VISIBLE_DEVICES"].split(',')))
     except KeyError:
@@ -202,7 +217,7 @@ if __name__ == "__main__":
     parser.add_argument('--prj_share_weight', action='store_true')
 
     # Training arguments
-    parser.add_argument('--max_epoch', type=int, default=10)
+    parser.add_argument('--max_epoch', type=int, default=10000)
     parser.add_argument('--batch_size', type=int, default=1024,
         help="The number of examples in each batch")
     parser.add_argument('--learning_rate', type=float, default=1e-3)
@@ -211,14 +226,22 @@ if __name__ == "__main__":
                         help='The path of checkpoint where the trained model will be saved')
     
     # Parallel arguments
-
+    parser.add_argument('--nodes', type=int, default=1)
     
     args = parser.parse_args()
 
-    # Additional arguments
+    # Additional arguments for Multi-gpus
     args.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     args.n_gpus = torch.cuda.device_count()
     args.gpu_idxs = gpu_idxs
+    args.world_size = args.n_gpus * args.nodes
+    args.batch_size = int(args.batch_size / args.world_size)
+    args.start_rank_idx = gpu_idxs[0]
+    
+    # Additional arguments for Training
+    args.val_losses = []
+    args.val_acces = []
+    args.start_epoch = 0
     
     assert args.n_gpus == len(args.gpu_idxs)
 
@@ -233,4 +256,7 @@ if __name__ == "__main__":
     random.seed(random_seed)
     
     # Start Training
-    train(args)
+    mp.spawn(train, 
+        args=(args,), 
+        nprocs=args.world_size, 
+        join=True)
